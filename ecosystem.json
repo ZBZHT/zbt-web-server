@@ -21,7 +21,7 @@
       "path": "/www/zbt/production",
       "ssh_options": "StrictHostKeyChecking=no",
       "pre-deploy-local" : "echo 'This is a local executed command'",
-      "pre-deploy" : "cd ~/zbt/zbedu-webapp && touch build.txt && echo 'pre-setup,build start...' >> test.txt && cd",
+      "pre-deploy" : "sh ./deploy.frontend.sh",
       "post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env production",
       "env": {
         "NODE_ENV": "production"
