@@ -16,8 +16,13 @@ var server = http.createServer(app, function (req, res) {
 });
 
 //Listen on provided port, on all network interfaces.
+var dbUrl = 'mongodb://zbt_admin:zbt_admin@127.0.0.1:27017/zbt' // 默认连接线上数据库
+var env = process.env.NODE_ENV || 'development'
+if (env === 'development') {
+  dbUrl = 'mongodb://localhost:27017/zbt'
+}
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://127.0.0.1:27017/zbt',function (err,zbt) {
+mongoose.connect(dbUrl, function (err,zbt) {
     if (err) {
         console.log('数据库连接失败');
     }else {
