@@ -6,8 +6,8 @@ const path = require('path');
 const glob = require('glob');
 const formidable = require('formidable');
 const bannerLeftData = require('../app/mock/bannerLeftData.json');
-const uploadsPath = "../app/uploads/addUser/";
-const addTestPath = "../app/uploads/addTest/";
+const uploadsPath = "../public/uploads/addUser/";
+const addTestPath = "../public/uploads/addTest/";
 const Student = require('../app/models/Student');
 const Teacher = require('../app/models/Teacher');
 const Question = require('../app/models/Question');
@@ -3020,6 +3020,7 @@ router.post('/teachSignIn', function (req, res) {
       });
     }
 });
+
 //新增精品课程
 router.post('/addBestCourse', function (req, res) {
   // console.log(req.body.data);
@@ -3054,22 +3055,6 @@ router.post('/addBestCourse', function (req, res) {
         // console.log(result[0].bestCourse.length)
         if(bestCourseLength <= 5){
           if (reqData.userType == 'SA' || reqData.userType == 'EA') {
-            /*let setCourse = new SetCourse(
-              {
-                bestcourse: bestcourse,
-              }
-            );
-            setCourse.save(function (err) {
-              if (err) {
-                console.log('创建签到表失败');
-                res.status(200).send({code: 1, Msg: '未找到该签到表3',});
-              } else {
-                console.log('创建签到表成功');
-                //console.log(result);
-                res.status(200).send({code: 0, result: result, Msg: '获取成功',});
-              }
-            });*/
-            // console.log(bestcourse)
             SetCourse.findOneAndUpdate({
               _id:result._id
             }, {

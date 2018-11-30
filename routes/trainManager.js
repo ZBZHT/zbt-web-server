@@ -112,6 +112,45 @@ router.post('/updateTrain', function (req, res) {
 
 });
 
+//自定义故障更新
+router.post('/updateUserTrain', function (req, res) {
+
+  let p1 = new Promise((resolve, reject) => {
+    if (req.session.users === undefined) {
+      res.status(200).send({code: 1, Msg: '登录过期或未登录',});
+    } else {
+      resolve('已登录')
+    }
+  });
+
+  Promise.all([p1]).then((result) => {
+    //console.log(result);
+    let userID1 = req.session.users.userID;
+    let command1 = req.body.data.command;
+    //console.log(command1);
+    Train.update({
+      userID: userID1,
+      "userFault.userTrainName": command1.userTrainName
+    }, {
+      time: moment().format("YYYY-MM-DD HH:mm:ss"),
+      //historyFault: command1,
+      "$set":{"userFault.$.onOff": command1.onOff}
+    }, function (err) {
+      if (err) {
+        console.log(err);
+        res.status(200).send({code: 1, Msg: '更新失败',});
+      } else {
+        //console.log('修改成功IDNo');
+        res.status(200).send({code: 0, Msg: '保存成功',});
+      }
+    });
+
+  }).catch((error) => {
+    console.log(error)
+  });
+
+});
+
 //获取实训故障开关命令
 router.post('/getOnOffData', function (req, res) {
   let name1 = req.body.data.courseName;
@@ -198,7 +237,7 @@ router.post('/onOffControl', function (req, res) {
       if (result === null) {
         console.log('数据库存储的ip为空');
       } else {
-        console.log('获取ip成功');
+        //console.log('获取ip成功');
         let words = (result.Ip).split(".");
         words[3] = '254';
         let a = words.join('.');
@@ -250,12 +289,19 @@ router.post('/addUserTrain', function (req, res) {
 });
 
 //编辑自定义故障
-router.post('/addUserTrain', function (req, res) {
+router.post('/editUserTrain', function (req, res) {
   let resData = req.body.data;
-  resData.userTrain.onOff = 'off';
-  Train.update(
-    {userID: resData.userID,},
-    {"$push":{userFault: resData.userTrain}},
+  //console.log(resData);
+  Train.update({
+      userID: resData.userID,
+      "userFault.userTrainName": resData.oldUserTrainName[0]
+    },{
+      time: moment().format("YYYY-MM-DD HH:mm:ss"),
+      "$set":{
+        "userFault.$.children": resData.userTrain.children,
+        "userFault.$.userTrainName": resData.userTrain.userTrainName,
+      }
+    },
     function (err) {
       if (err) {
         console.log(err);

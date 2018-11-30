@@ -11,10 +11,10 @@ const router = express.Router();
 
 const sysInfo = core.getServerInfo();
 const ResourceCenter = require('../app/models/ResourceCenter');
-const resourcePath = "../app/uploads/resource/";
-const uploadsPath = "../app/uploads/resource/";
-const CompPath = "../app/uploads/competition";
-const zipDir = path.join(path.resolve(__dirname,"../app/uploads"), "zip");
+const resourcePath = "../public/uploads/resource/";
+const uploadsPath = "../public/uploads/resource/";
+const CompPath = "../public/uploads/competition";
+const zipDir = path.join(path.resolve(__dirname,"../public/uploads"), "zip");
 //var uploadDir = path.join(path.resolve(__dirname,"../"), "uploads");
 const zipName = "moreFiles.zip";
 
@@ -22,7 +22,7 @@ const zipName = "moreFiles.zip";
 router.post('/upload', function(req, res) {
 
     let form = new formidable.IncomingForm();
-    form.uploadDir = "../app/uploads/resource";//设置文件上传存放地址
+    form.uploadDir = "../public/uploads/resource";//设置文件上传存放地址
     form.maxFieldsSize = 600 * 1024 * 1024; //设置最大600M
     form.keepExtensions = true;
 

@@ -8,7 +8,6 @@ const bannerLeftData = require('../app/mock/bannerLeftData.json');
 
 const login = require('../app/mock/login.json');
 const logOut = require('../app/mock/logOut.json');
-const test = require('../app/mock/test.json');
 const CenterTree = require('../app/models/CenterTree');
 
 /* GET index.json */
@@ -51,10 +50,6 @@ router.get('/login', function (req, res) {
 router.get('/logOut', function (req, res) {
     res.setHeader("Content-Type", "application/json");
     res.end(JSON.stringify(logOut));
-});
-router.get('/test', function (req, res) {
-    res.setHeader("Content-Type", "application/json");
-    res.end(JSON.stringify(test));
 });
 
 module.exports = router;
