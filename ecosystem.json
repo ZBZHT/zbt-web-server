@@ -20,8 +20,8 @@
       "repo": "git@github.com:ZBZHT/zbt-web-server.git",
       "path": "/www/zbt/production",
       "ssh_options": "StrictHostKeyChecking=no",
-      "pre-deploy-local" : "echo 'This is a local executed command'",
-      "pre-deploy" : "sh ~/zbt/zbedu-webapp/deploy.frontend.sh",
+      "pre-deploy-local" : "echo 'This is a pre-deploy-local executed command'",
+      "pre-deploy" : "echo 'This is a pre-deploy hook'",
       "post-deploy": "npm install && pm2 startOrRestart ecosystem.json --env production",
       "env": {
         "NODE_ENV": "production"
